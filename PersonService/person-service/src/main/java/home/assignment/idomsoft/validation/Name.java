@@ -15,7 +15,7 @@ public @interface Name {
 	
 	public String value() default "";
 	
-	public String message() default  "Name is not valid";
+	public String message() default  "Only Hungarian charaters and ä,-,' are allowed ";
 	
 	public Class <?>[] groups() default {};
 	
