@@ -34,7 +34,10 @@ public class NationalityService {
 	@PostConstruct
 	public void readJson() {
 		try {
-			NationalityWrapper nationalityWrapper = objectMapper.readValue(new File("C:\\Users\\ZZ01N1740\\git\\IdomSoft\\idomsoft-assignment\\PersonService\\person-service\\kodszotar21_allampolg.json"),NationalityWrapper.class);
+			NationalityWrapper nationalityWrapper = objectMapper.readValue(new File(getClass().getClassLoader().getResource("kodszotar21_allampolg.json").getFile()),NationalityWrapper.class);
+			
+			
+//			NationalityWrapper nationalityWrapper = objectMapper.readValue(new File("C:\\Users\\ZZ01N1740\\git\\IdomSoft\\idomsoft-assignment\\PersonService\\person-service\\kodszotar21_allampolg.json"),NationalityWrapper.class);
 			this.nationalities = nationalityWrapper.getRows();
 		} catch (IOException e) {
 			e.printStackTrace();

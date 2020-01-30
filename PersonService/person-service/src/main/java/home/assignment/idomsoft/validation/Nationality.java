@@ -13,7 +13,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Nationality {
 	
-public String value() default "";
+	public String value() default "";
 	
 	public String message() default  " Not valid nationality code ";
 	

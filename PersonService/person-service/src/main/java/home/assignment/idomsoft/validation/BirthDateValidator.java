@@ -20,7 +20,6 @@ public class BirthDateValidator implements ConstraintValidator<BirthDate, String
 		if (isDateFormatValid(birthDate)) {
 			
 		}
-
 		return false;
 	}
 

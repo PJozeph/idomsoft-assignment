@@ -10,7 +10,7 @@ import home.assignment.idomsoft.service.NationalityService;
 public class NationalityValidator implements ConstraintValidator<Nationality, String> {
 	
 	@Autowired
-	private NationalityService nationalityReader;
+	private NationalityService nationalityService;
 	
 	private String nationality;
 
@@ -21,7 +21,7 @@ public class NationalityValidator implements ConstraintValidator<Nationality, St
 	
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext context) {
-		return nationalityReader.isNationalityCodePresent(value);
+		return nationalityService.isNationalityCodePresent(value);
 	}
 	
 

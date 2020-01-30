@@ -1,8 +1,6 @@
 package home.assignment.idomsoft.entity;
 
-import java.io.Serializable;
-
-public class Nationality implements Serializable {
+public class Nationality {
 	
 	private String kod;
 	private String allampolgarsag;
