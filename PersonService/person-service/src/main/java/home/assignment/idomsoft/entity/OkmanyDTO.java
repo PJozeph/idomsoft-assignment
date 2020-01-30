@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package home.assignment.idomsoft.personservice.dto;
+package home.assignment.idomsoft.entity;
 
 import java.io.Serializable;
 import java.util.Date;

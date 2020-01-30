@@ -1,4 +1,4 @@
-package home.assignment.idomsoft.personservice;
+package home.assignment.idomsoft.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

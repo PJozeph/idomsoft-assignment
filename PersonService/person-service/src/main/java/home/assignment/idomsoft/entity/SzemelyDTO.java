@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package home.assignment.idomsoft.personservice.dto;
+package home.assignment.idomsoft.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,8 +12,11 @@ import java.util.Date;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import home.assignment.idomsoft.validation.Gender;
 import home.assignment.idomsoft.validation.Name;
+import home.assignment.idomsoft.validation.Nationality;
 
 public class SzemelyDTO implements Serializable{
 
@@ -94,12 +97,14 @@ public class SzemelyDTO implements Serializable{
     @Name
     private String aNev;
     
+    @DateTimeFormat(pattern = "yyyy.MM.dd")
     private Date szulDat;
 
     @Gender
     private String neme;
     
     @Size(min=3)
+    @Nationality
     private String allampKod;
     
     private String allampDekod;

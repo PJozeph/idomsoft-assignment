@@ -30,8 +30,6 @@ public class NameValidator implements ConstraintValidator<Name, String> {
 		if (spaceCount < 1) {
 			return false;
 		}
-
 		return true;
 	}
-
 }
