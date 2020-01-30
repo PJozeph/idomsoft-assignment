@@ -23,6 +23,5 @@ public class NationalityValidator implements ConstraintValidator<Nationality, St
 	public boolean isValid(String value, ConstraintValidatorContext context) {
 		return nationalityService.isNationalityCodePresent(value);
 	}
-	
 
 }

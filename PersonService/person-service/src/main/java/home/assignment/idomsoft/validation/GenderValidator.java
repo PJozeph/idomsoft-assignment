@@ -20,5 +20,4 @@ public class GenderValidator implements ConstraintValidator<Gender, String> {
 		return gender.equals(male) ? true : gender.equals(female);
 	}
 
-
 }

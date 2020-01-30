@@ -15,7 +15,7 @@ public @interface Nationality {
 	
 	public String value() default "";
 	
-	public String message() default  " Not valid nationality code ";
+	public String message() default  "Not valid nationality code ";
 	
 	public Class <?>[] groups() default {};
 	
