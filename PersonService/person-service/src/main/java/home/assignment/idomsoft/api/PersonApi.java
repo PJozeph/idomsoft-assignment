@@ -1,4 +1,4 @@
-package home.assignment.idomsoft.service.api;
+package home.assignment.idomsoft.api;
 
 import java.util.ArrayList;
 import java.util.List;
