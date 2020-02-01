@@ -15,7 +15,7 @@ public @interface BirthDate {
 	
 	public String value() default "";
 
-	public String message() default "Date must be in yyy-MM-dd formst. Person has to be between 18 and 120 years old";
+	public String message() default "Date must be in yyy-MM-dd format. Person has to be between 18 and 120 years old";
 
 	public Class<?>[] groups() default {};
 

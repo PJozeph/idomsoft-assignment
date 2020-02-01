@@ -8,17 +8,20 @@ import javax.validation.ConstraintValidatorContext;
 
 public class BirthDateValidator implements ConstraintValidator<BirthDate, String> {
 
+	private static final int OLDEST = 120;
+	private static final int YOUNGEST = 18;
 	private String birthDate;
 
 	@Override
 	public void initialize(BirthDate constraintAnnotation) {
-		this.birthDate = constraintAnnotation.value();
+			this.birthDate = constraintAnnotation.value();
 	}
 
 	@Override
 	public boolean isValid(String birthDate, ConstraintValidatorContext context) {
 		if (isDateFormatValid(birthDate)) {
-			
+			return LocalDate.now().minusYears(YOUNGEST).isAfter(LocalDate.parse(birthDate))  && 
+					LocalDate.now().minusYears(OLDEST).isBefore(LocalDate.parse(birthDate));
 		}
 		return false;
 	}
@@ -31,5 +34,7 @@ public class BirthDateValidator implements ConstraintValidator<BirthDate, String
 			return false;
 		}
 	}
+	
+	
 
 }

@@ -9,10 +9,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import home.assignment.idomsoft.validation.BirthDate;
 import home.assignment.idomsoft.validation.Gender;
 import home.assignment.idomsoft.validation.Name;
 import home.assignment.idomsoft.validation.Nationality;
@@ -43,11 +45,11 @@ public class SzemelyDTO implements Serializable{
         this.aNev = aNev;
     }
 
-    public Date getSzulDat() {
+    public String getSzulDat() {
         return szulDat;
     }
 
-    public void setSzulDat(Date szulDat) {
+    public void setSzulDat(String szulDat) {
         this.szulDat = szulDat;
     }
 
@@ -96,8 +98,8 @@ public class SzemelyDTO implements Serializable{
     @Name
     private String aNev;
     
-    @DateTimeFormat(pattern = "yyyy.MM.dd")
-    private Date szulDat;
+    @BirthDate
+    private String szulDat;
 
     @Gender
     private String neme;
