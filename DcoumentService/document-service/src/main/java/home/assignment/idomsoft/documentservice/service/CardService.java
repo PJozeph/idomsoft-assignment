@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import home.assignment.idomsoft.documentservice.entity.Card;
 import home.assignment.idomsoft.documentservice.entity.CardWrapper;
+import home.assignment.idomsoft.documentservice.entity.OkmanyDTO;
 
 @Service
 public class CardService {
@@ -22,6 +23,10 @@ public class CardService {
 	@Autowired
 	private ObjectMapper objectMapper;
 	
+	
+	public Card getOkmanyDto(String cardId) {
+		return cards.stream().filter(card -> card.getKod().equals(cardId)).findFirst().get();
+	}
 
 	@PostConstruct
 	public void readJson() {

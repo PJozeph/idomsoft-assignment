@@ -1,5 +1,6 @@
 package home.assignment.idomsoft.api;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class PersonApi {
 	@Autowired
 	private NationalityService nationalityService;
 	
-	private final String uri = "http://localhost:8082/documentApi";
+	private final String uri = "http://localhost:8082/documentApi?cardList={cardList}";
 
 	@RequestMapping("/validate-person")
 	public ResponseEntity<Object> getPersonDetaile(@Valid SzemelyDTO szemelyDto, BindingResult bindingResult ,OkmanyDTO okmanyDto ) {
@@ -45,10 +46,12 @@ public class PersonApi {
 		szemelyDto.setAllampDekod(nationalityService.getNationality(szemelyDto.getAllampKod()));
 		
 		ResponseEntity<OkmanyDtoResponse> exchange 
-						= restTemplate.exchange(uri, HttpMethod.POST, new HttpEntity<>(okmanyDto,createHeader()), OkmanyDtoResponse.class);
+						= restTemplate.exchange(uri, HttpMethod.POST, new HttpEntity<>(okmanyDto,createHeader()), OkmanyDtoResponse.class,"1,2,3");
 		
 		OkmanyDtoResponse body = exchange.getBody();
-		return exchange.getBody().getErrorMessages().size() > 1 ? 
+		
+		
+		return exchange.getBody().getErrorMessages().size() >= 1 ? 
 				  new ResponseEntity<>(new ValidationErrorMessage(body.getErrorMessages()), HttpStatus.BAD_REQUEST):
 				  new ResponseEntity<>(new PersonDetailesResponse(szemelyDto), HttpStatus.OK);
 	}

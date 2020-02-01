@@ -8,6 +8,7 @@ package home.assignment.idomsoft.documentservice.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 
 public class OkmanyDTO implements Serializable{
@@ -53,7 +54,8 @@ public class OkmanyDTO implements Serializable{
     }
     private static final long serialVersionUID = 1L;
     
-    @NotEmpty(message="fcklmhvdfjklvghdfjklghbdfjhk")
+    @NotEmpty(message="okmTipus can not be emty")
+    @Max(value = 1, message = "okmTipus can not be bigger/smaler than 1 character")
     private String okmTipus;
     
     private String okmanySzam;

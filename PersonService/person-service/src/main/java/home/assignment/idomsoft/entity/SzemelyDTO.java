@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;

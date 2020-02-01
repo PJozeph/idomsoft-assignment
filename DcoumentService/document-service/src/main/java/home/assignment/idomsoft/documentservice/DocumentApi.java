@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -13,25 +14,40 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import home.assignment.idomsoft.documentservice.entity.OkmanyDTO;
 import home.assignment.idomsoft.documentservice.entity.OkmanyDtoResponse;
+import home.assignment.idomsoft.documentservice.service.CardService;
 
 //crossorigin 
 @RestController
 public class DocumentApi {
 	final String uri = "http://localhost:8080/documentApi";
 
+	@Autowired
+	private CardService cardService;
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/documentApi")
-	public ResponseEntity<OkmanyDtoResponse> getPersonDetaile(@RequestBody @Valid OkmanyDTO okmanyDto, BindingResult bindingResult) {
+	public ResponseEntity<OkmanyDtoResponse> getPersonDetaile(@RequestBody @Valid OkmanyDTO okmanyDto ,BindingResult bindingResult ,
+			@RequestParam(name = "cardList") String cardList) {
+		
 		if (bindingResult.hasErrors()) {
 			List<ObjectError> allErrors = bindingResult.getAllErrors();
 			List<String> errosMessages = new ArrayList<>();
 			allErrors.forEach(e -> errosMessages.add(e.getDefaultMessage()));
-			new ResponseEntity<>(new OkmanyDtoResponse(errosMessages, new OkmanyDTO()), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new OkmanyDtoResponse(errosMessages, Arrays.asList()), HttpStatus.OK);
 		}
-		return new ResponseEntity<>(new OkmanyDtoResponse(Arrays.asList(), okmanyDto), HttpStatus.OK);
+		
+		
+		System.out.println(cardList);
+		
+		
+		
+		
+		return null;
+//		return new ResponseEntity<>(new OkmanyDtoResponse(Arrays.asList(), okmanyDto), HttpStatus.OK);
 	}
 
 }

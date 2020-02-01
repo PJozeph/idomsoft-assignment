@@ -1,11 +1,13 @@
 package home.assignment.idomsoft.validation;
 
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import home.assignment.idomsoft.service.NationalityService;
+
 
 public class NationalityValidator implements ConstraintValidator<Nationality, String> {
 	
