@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -35,7 +36,8 @@ public class PersonApi {
 	private final String uri = "http://localhost:8082/documentApi?cardList={cardList}";
 
 	@RequestMapping("/validate-person")
-	public ResponseEntity<Object> getPersonDetaile(@Valid SzemelyDTO szemelyDto, BindingResult bindingResult ,OkmanyDTO okmanyDto ) {
+	public ResponseEntity<Object> getPersonDetaile(@Valid SzemelyDTO szemelyDto, BindingResult bindingResult ,OkmanyDTO okmanyDto, 
+			@RequestParam(name = "okmanyLista") String cardList  ) {
 		if (bindingResult.hasErrors()) {
 			List<ObjectError> allErrors = bindingResult.getAllErrors();
 			List<String> errosMessages = new ArrayList<>();
@@ -46,9 +48,10 @@ public class PersonApi {
 		szemelyDto.setAllampDekod(nationalityService.getNationality(szemelyDto.getAllampKod()));
 		
 		ResponseEntity<OkmanyDtoResponse> exchange 
-						= restTemplate.exchange(uri, HttpMethod.POST, new HttpEntity<>(okmanyDto,createHeader()), OkmanyDtoResponse.class,"1,2,3");
+						= restTemplate.exchange(uri, HttpMethod.POST, new HttpEntity<>(okmanyDto,createHeader()), OkmanyDtoResponse.class, cardList);
 		
 		OkmanyDtoResponse body = exchange.getBody();
+		szemelyDto.setOkmLista(body.getOkmanyDTO());
 		
 		
 		return exchange.getBody().getErrorMessages().size() >= 1 ? 

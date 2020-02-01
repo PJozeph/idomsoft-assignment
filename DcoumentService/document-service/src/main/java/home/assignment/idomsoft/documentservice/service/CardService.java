@@ -24,8 +24,11 @@ public class CardService {
 	private ObjectMapper objectMapper;
 	
 	
-	public Card getOkmanyDto(String cardId) {
-		return cards.stream().filter(card -> card.getKod().equals(cardId)).findFirst().get();
+	public OkmanyDTO getOkmanyDto(String cardId) {
+		OkmanyDTO card = new OkmanyDTO();
+		 String ertek = cards.stream().filter(c -> c.getKod().equals(cardId)).findFirst().get().getErtek();
+		 card.setOkmTipus(ertek);
+		 return card;
 	}
 
 	@PostConstruct

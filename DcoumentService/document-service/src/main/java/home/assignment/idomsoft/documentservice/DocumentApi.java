@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import home.assignment.idomsoft.documentservice.entity.Card;
 import home.assignment.idomsoft.documentservice.entity.OkmanyDTO;
 import home.assignment.idomsoft.documentservice.entity.OkmanyDtoResponse;
 import home.assignment.idomsoft.documentservice.service.CardService;
@@ -37,17 +38,14 @@ public class DocumentApi {
 			List<ObjectError> allErrors = bindingResult.getAllErrors();
 			List<String> errosMessages = new ArrayList<>();
 			allErrors.forEach(e -> errosMessages.add(e.getDefaultMessage()));
-			return new ResponseEntity<>(new OkmanyDtoResponse(errosMessages, Arrays.asList()), HttpStatus.OK);
+			return new ResponseEntity<>(new OkmanyDtoResponse(errosMessages, new ArrayList<OkmanyDTO>()), HttpStatus.OK);
 		}
 		
-		
-		System.out.println(cardList);
-		
-		
-		
-		
-		return null;
-//		return new ResponseEntity<>(new OkmanyDtoResponse(Arrays.asList(), okmanyDto), HttpStatus.OK);
+		ArrayList<OkmanyDTO> personCards = new ArrayList<>();
+		for (String  cardId : cardList.split(",")) {
+			personCards.add(cardService.getOkmanyDto(cardId));
+		}
+		return new ResponseEntity<>(new OkmanyDtoResponse(new ArrayList<String>(),personCards), HttpStatus.OK);
 	}
 
 }

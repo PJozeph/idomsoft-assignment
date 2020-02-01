@@ -2,17 +2,18 @@ package home.assignment.idomsoft.documentservice.entity;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class OkmanyDtoResponse implements Serializable {
 	
 	private List<String> errorMessages;
-	private List<OkmanyDTO> okmanyDTO;
+	private ArrayList<OkmanyDTO> okmanyDTO;
 	
 	public OkmanyDtoResponse() {}
 	
-	public OkmanyDtoResponse(List<String> errorMessages, List<OkmanyDTO> okmanyDTO) {
+	public OkmanyDtoResponse(List<String> errorMessages, ArrayList<OkmanyDTO> okmanyDTO) {
 		this.errorMessages = errorMessages;
 		this.okmanyDTO = okmanyDTO;
 	}
@@ -25,7 +26,7 @@ public class OkmanyDtoResponse implements Serializable {
 		this.errorMessages = errorMessages;
 	}
 	
-	public void setOkmanyDTO(List<OkmanyDTO> okmanyDTO) {
+	public void setOkmanyDTO(ArrayList<OkmanyDTO> okmanyDTO) {
 		this.okmanyDTO = okmanyDTO;
 	}
 	
