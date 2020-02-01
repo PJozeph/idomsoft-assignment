@@ -61,6 +61,5 @@ public class OkmanyDTO implements Serializable{
     private Date lejarDat;
     
     private boolean ervenyes;
-
     
 }

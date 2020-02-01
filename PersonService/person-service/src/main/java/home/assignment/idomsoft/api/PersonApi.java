@@ -33,11 +33,11 @@ public class PersonApi {
 	@Autowired
 	private NationalityService nationalityService;
 	
-	private final String uri = "http://localhost:8082/documentApi?cardList={cardList}";
+	private final String uri = "http://localhost:8082/documentApi";
 
 	@RequestMapping("/validate-person")
-	public ResponseEntity<Object> getPersonDetaile(@Valid SzemelyDTO szemelyDto, BindingResult bindingResult ,OkmanyDTO okmanyDto, 
-			@RequestParam(name = "okmanyLista") String cardList  ) {
+	public ResponseEntity<Object> getPersonDetaile(@Valid SzemelyDTO szemelyDto, BindingResult bindingResult ,
+			@RequestParam(name = "okmanyDtos")List<String> okmanyDtos) {
 		if (bindingResult.hasErrors()) {
 			List<ObjectError> allErrors = bindingResult.getAllErrors();
 			List<String> errosMessages = new ArrayList<>();
@@ -47,16 +47,15 @@ public class PersonApi {
 		RestTemplate restTemplate = new RestTemplate();
 		szemelyDto.setAllampDekod(nationalityService.getNationality(szemelyDto.getAllampKod()));
 		
-		ResponseEntity<OkmanyDtoResponse> exchange 
-						= restTemplate.exchange(uri, HttpMethod.POST, new HttpEntity<>(okmanyDto,createHeader()), OkmanyDtoResponse.class, cardList);
 		
-		OkmanyDtoResponse body = exchange.getBody();
-		szemelyDto.setOkmLista(body.getOkmanyDTO());
+		OkmanyDtoResponse exchange = restTemplate.postForObject(uri,okmanyDtos ,OkmanyDtoResponse.class);
 		
 		
-		return exchange.getBody().getErrorMessages().size() >= 1 ? 
-				  new ResponseEntity<>(new ValidationErrorMessage(body.getErrorMessages()), HttpStatus.BAD_REQUEST):
-				  new ResponseEntity<>(new PersonDetailesResponse(szemelyDto), HttpStatus.OK);
+		
+		return null;
+//				exchange.getErrorMessages().size() >= 1 ? 
+//				  new ResponseEntity<>(new ValidationErrorMessage(exchange.getErrorMessages()), HttpStatus.BAD_REQUEST):
+//				  new ResponseEntity<>(new PersonDetailesResponse(szemelyDto), HttpStatus.OK);
 	}
 
 	private HttpHeaders createHeader() {
