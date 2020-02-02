@@ -8,6 +8,7 @@ package home.assignment.idomsoft.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
@@ -77,11 +78,11 @@ public class SzemelyDTO implements Serializable{
         this.allampDekod = allampDekod;
     }
 
-    public ArrayList<OkmanyDTO> getOkmLista() {
+    public List<OkmanyDTO> getOkmLista() {
         return okmLista;
     }
 
-    public void setOkmLista(ArrayList<OkmanyDTO> okmLista) {
+    public void setOkmLista(List<OkmanyDTO> okmLista) {
         this.okmLista = okmLista;
     }
     private static final long serialVersionUID = 4L;
@@ -110,6 +111,6 @@ public class SzemelyDTO implements Serializable{
     
     private String allampDekod;
     
-    private ArrayList<OkmanyDTO> okmLista;
+    private List<OkmanyDTO> okmLista;
     
 }

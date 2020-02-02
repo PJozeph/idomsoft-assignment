@@ -37,7 +37,7 @@ public class PersonApi {
 
 	@RequestMapping("/validate-person")
 	public ResponseEntity<Object> getPersonDetaile(@Valid SzemelyDTO szemelyDto, BindingResult bindingResult ,
-			@RequestParam(name = "okmanyDtos")List<String> okmanyDtos) {
+			@RequestParam(name = "okmanyDtos") String okmanyDtos) {
 		if (bindingResult.hasErrors()) {
 			List<ObjectError> allErrors = bindingResult.getAllErrors();
 			List<String> errosMessages = new ArrayList<>();
@@ -49,13 +49,11 @@ public class PersonApi {
 		
 		
 		OkmanyDtoResponse exchange = restTemplate.postForObject(uri,okmanyDtos ,OkmanyDtoResponse.class);
+		szemelyDto.setOkmLista(exchange.getOkmanyDTO());
 		
-		
-		
-		return null;
-//				exchange.getErrorMessages().size() >= 1 ? 
-//				  new ResponseEntity<>(new ValidationErrorMessage(exchange.getErrorMessages()), HttpStatus.BAD_REQUEST):
-//				  new ResponseEntity<>(new PersonDetailesResponse(szemelyDto), HttpStatus.OK);
+		return exchange.getErrorMessages().size() >= 1 ? 
+				  new ResponseEntity<>(new ValidationErrorMessage(exchange.getErrorMessages()), HttpStatus.BAD_REQUEST):
+				  new ResponseEntity<>(new PersonDetailesResponse(szemelyDto), HttpStatus.OK);
 	}
 
 	private HttpHeaders createHeader() {

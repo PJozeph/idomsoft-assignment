@@ -12,9 +12,9 @@ public class CardNumberValidator {
 
 	private List<String> errosMessages = new ArrayList<>();
 
-	public List<String> isvalid(ArrayList<OkmanyDTO> personCards) {
+	public List<String> isvalid(List<OkmanyDTO> okmanyDtoList) {
 
-		personCards.forEach(e -> {
+		okmanyDtoList.forEach(e -> {
 			if (e.getOkmTipus().equals("Személyazonosító igazolvány")) {
 				if (!e.getOkmanySzam().matches("^[a-zA-Z]{6}\\d{2}$")) {
 					errosMessages.add("ID car number has to be 6 numbers and 2 digit");

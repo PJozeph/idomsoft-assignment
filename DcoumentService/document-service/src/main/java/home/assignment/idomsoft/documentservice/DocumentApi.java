@@ -44,33 +44,24 @@ public class DocumentApi {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/documentApi")
 	@ResponseBody
-	public ResponseEntity<OkmanyDtoResponse> getPersonDetaile(@RequestBody List<String> okmanyDtos) {
-		
-			ArrayList<OkmanyDTO> personCards = new ArrayList<>();
-		for (String okmanyDTO : okmanyDtos) {
+	public ResponseEntity<OkmanyDtoResponse> getPersonDetaile(@RequestBody String okmanyDtos) {
+			List<OkmanyDTO> okmanyDtoList = null;
+			List<String> errosMessages = new ArrayList<>();
 			try {
-				personCards.add(objectMapper.readValue(okmanyDTO, OkmanyDTO.class));
+				 okmanyDtoList =  Arrays.asList(objectMapper.readValue(okmanyDtos, OkmanyDTO[].class));
 			} catch (IOException e) {
-				e.printStackTrace();
+				errosMessages.add(e.getMessage());
+				return new ResponseEntity<>(new OkmanyDtoResponse(errosMessages, new ArrayList<OkmanyDTO>()), HttpStatus.OK);
 			}
-		}
+			
+			List<String> isvalid = cardNumberValidator.isvalid(okmanyDtoList);
+			if (!isvalid.isEmpty()) {
+				errosMessages.addAll(isvalid);
+			}
 		
-//		if (bindingResult.hasErrors()) {
-//			List<ObjectError> allErrors = bindingResult.getAllErrors();
-//			List<String> errosMessages = new ArrayList<>();
-//			allErrors.forEach(e -> errosMessages.add(e.getDefaultMessage()));
-//			return new ResponseEntity<>(new OkmanyDtoResponse(errosMessages, new ArrayList<OkmanyDTO>()), HttpStatus.OK);
-//		}
-//		
-//		ArrayList<OkmanyDTO> personCards = new ArrayList<>();
-//		for (String  cardId : cardList.split(",")) {
-//			personCards.add(cardService.getOkmanyDto(cardId));
-//		}
-//		
-		List<String> errosMessages = cardNumberValidator.isvalid(personCards);
-		
-		return errosMessages.isEmpty() ?  new ResponseEntity<>(new OkmanyDtoResponse(new ArrayList<String>(),personCards), HttpStatus.OK) :
-			new ResponseEntity<>(new OkmanyDtoResponse(errosMessages, new ArrayList<OkmanyDTO>()), HttpStatus.OK);
+		return errosMessages.isEmpty()
+				? new ResponseEntity<>(new OkmanyDtoResponse(new ArrayList<String>(), okmanyDtoList), HttpStatus.OK)
+				: new ResponseEntity<>(new OkmanyDtoResponse(errosMessages, new ArrayList<OkmanyDTO>()), HttpStatus.OK);
 	}
 
 }
