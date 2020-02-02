@@ -17,6 +17,7 @@ public class BeanCondig {
 		return new NationalityService();
 	}
 	
+	// fix  valid characters are defined in RFC 7230 and RFC 3986 error
 	@Bean
 	public ConfigurableServletWebServerFactory webServerFactory() {
 	    TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();

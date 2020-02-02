@@ -15,7 +15,7 @@ public @interface Gender {
 
 	public String value() default "";
 
-	public String message() default "Name is not valid";
+	public String message() default "Gender can be N or F";
 
 	public Class<?>[] groups() default {};
 

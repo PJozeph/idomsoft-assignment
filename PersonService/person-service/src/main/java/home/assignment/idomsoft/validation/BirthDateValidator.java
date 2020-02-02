@@ -20,7 +20,7 @@ public class BirthDateValidator implements ConstraintValidator<BirthDate, String
 	@Override
 	public boolean isValid(String birthDate, ConstraintValidatorContext context) {
 		if (isDateFormatValid(birthDate)) {
-			return LocalDate.now().minusYears(YOUNGEST).isAfter(LocalDate.parse(birthDate))  && 
+			return LocalDate.now().minusYears(YOUNGEST).isAfter(LocalDate.parse(birthDate)) && 
 					LocalDate.now().minusYears(OLDEST).isBefore(LocalDate.parse(birthDate));
 		}
 		return false;
@@ -34,7 +34,5 @@ public class BirthDateValidator implements ConstraintValidator<BirthDate, String
 			return false;
 		}
 	}
-	
-	
 
 }

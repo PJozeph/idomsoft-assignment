@@ -3,29 +3,22 @@ package home.assignment.idomsoft.documentservice;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
-import javax.validation.Valid;
-
-import org.hibernate.validator.constraints.pl.REGON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import home.assignment.idomsoft.documentservice.entity.Card;
 import home.assignment.idomsoft.documentservice.entity.OkmanyDTO;
 import home.assignment.idomsoft.documentservice.entity.OkmanyDtoResponse;
-import home.assignment.idomsoft.documentservice.service.CardNumberValidator;
 import home.assignment.idomsoft.documentservice.service.CardService;
 
 //crossorigin 
@@ -35,32 +28,43 @@ public class DocumentApi {
 
 	@Autowired
 	private CardService cardService;
-	
-	@Autowired 
-	private CardNumberValidator cardNumberValidator;
-	
+
 	@Autowired
 	private ObjectMapper objectMapper;
-	
+
 	@RequestMapping(method = RequestMethod.POST, value = "/documentApi")
 	@ResponseBody
 	public ResponseEntity<OkmanyDtoResponse> getPersonDetaile(@RequestBody String okmanyDtos) {
-			List<OkmanyDTO> okmanyDtoList = null;
-			List<String> errosMessages = new ArrayList<>();
-			try {
-				 okmanyDtoList =  Arrays.asList(objectMapper.readValue(okmanyDtos, OkmanyDTO[].class));
-			} catch (IOException e) {
-				errosMessages.add(e.getMessage());
-				return new ResponseEntity<>(new OkmanyDtoResponse(errosMessages, new ArrayList<OkmanyDTO>()), HttpStatus.OK);
+		List<String> errosMessages = new ArrayList<>();
+		List<OkmanyDTO> cards;
+		try {
+			cards = Arrays.asList(objectMapper.readValue(okmanyDtos, OkmanyDTO[].class));
+		} catch (IOException e) {
+			errosMessages.add(e.getMessage());
+			return new ResponseEntity<>(new OkmanyDtoResponse(errosMessages, new ArrayList<OkmanyDTO>()),HttpStatus.OK);
+		}
+
+		cards.forEach(card -> {
+			String okmanyTipus = cardService.getOkmanyTipus(card.getOkmTipus());
+			if (okmanyTipus == null) {
+				errosMessages.add(card.getOkmTipus() + " no such a card type");
 			}
-			
-			List<String> isvalid = cardNumberValidator.isvalid(okmanyDtoList);
-			if (!isvalid.isEmpty()) {
-				errosMessages.addAll(isvalid);
+			else if (card.getLejarDat() == null) {
+				errosMessages.add("expiration date is required");
 			}
-		
+			else {
+				card.setOkmTipus(okmanyTipus);
+				card.setErvenyes(new Date().getTime() < card.getLejarDat().getTime());
+			}
+		});
+
+		List<String> cardNumbersValidationMessages = cardService.isCardNumbervalid(cards);
+		if (!cardNumbersValidationMessages.isEmpty()) {
+			errosMessages.addAll(cardNumbersValidationMessages);
+		}
+
 		return errosMessages.isEmpty()
-				? new ResponseEntity<>(new OkmanyDtoResponse(new ArrayList<String>(), okmanyDtoList), HttpStatus.OK)
+				? new ResponseEntity<>(new OkmanyDtoResponse(new ArrayList<String>(), cards), HttpStatus.OK)
 				: new ResponseEntity<>(new OkmanyDtoResponse(errosMessages, new ArrayList<OkmanyDTO>()), HttpStatus.OK);
 	}
 

@@ -38,16 +38,14 @@ public class PersonApi {
 	@RequestMapping("/validate-person")
 	public ResponseEntity<Object> getPersonDetaile(@Valid SzemelyDTO szemelyDto, BindingResult bindingResult ,
 			@RequestParam(name = "okmanyDtos") String okmanyDtos) {
+		
 		if (bindingResult.hasErrors()) {
-			List<ObjectError> allErrors = bindingResult.getAllErrors();
-			List<String> errosMessages = new ArrayList<>();
-			allErrors.forEach(e -> errosMessages.add(e.getDefaultMessage()));
-			return new ResponseEntity<>(new ValidationErrorMessage(errosMessages), HttpStatus.BAD_REQUEST);
+			return createResponse(bindingResult);
 		}
-		RestTemplate restTemplate = new RestTemplate();
+		
 		szemelyDto.setAllampDekod(nationalityService.getNationality(szemelyDto.getAllampKod()));
 		
-		
+		RestTemplate restTemplate = new RestTemplate();
 		OkmanyDtoResponse exchange = restTemplate.postForObject(uri,okmanyDtos ,OkmanyDtoResponse.class);
 		szemelyDto.setOkmLista(exchange.getOkmanyDTO());
 		
@@ -56,10 +54,11 @@ public class PersonApi {
 				  new ResponseEntity<>(new PersonDetailesResponse(szemelyDto), HttpStatus.OK);
 	}
 
-	private HttpHeaders createHeader() {
-		HttpHeaders headers=new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-		return headers;
+	private ResponseEntity<Object> createResponse(BindingResult bindingResult) {
+		List<ObjectError> allErrors = bindingResult.getAllErrors();
+		List<String> errosMessages = new ArrayList<>();
+		allErrors.forEach(e -> errosMessages.add(e.getDefaultMessage()));
+		return new ResponseEntity<>(new ValidationErrorMessage(errosMessages), HttpStatus.BAD_REQUEST);
 	}
 	
 }
