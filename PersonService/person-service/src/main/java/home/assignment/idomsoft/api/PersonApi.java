@@ -7,9 +7,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import home.assignment.idomsoft.entity.OkmanyDTO;
 import home.assignment.idomsoft.entity.OkmanyDtoResponse;
 import home.assignment.idomsoft.entity.PersonDetailesResponse;
 import home.assignment.idomsoft.entity.SzemelyDTO;
