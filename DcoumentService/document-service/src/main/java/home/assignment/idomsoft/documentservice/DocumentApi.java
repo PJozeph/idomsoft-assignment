@@ -34,7 +34,7 @@ public class DocumentApi {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/documentApi")
 	@ResponseBody
-	public ResponseEntity<OkmanyDtoResponse> getPersonDetaile(@RequestBody String okmanyDtos) {
+	public ResponseEntity<OkmanyDtoResponse> getPersonDocuments(@RequestBody String okmanyDtos) {
 		List<String> errosMessages = new ArrayList<>();
 		List<OkmanyDTO> cards;
 		try {
