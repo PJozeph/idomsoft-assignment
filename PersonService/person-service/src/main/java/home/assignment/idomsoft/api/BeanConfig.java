@@ -10,14 +10,14 @@ import org.springframework.context.annotation.Configuration;
 import home.assignment.idomsoft.service.NationalityService;
 
 @Configuration
-public class BeanCondig {
+public class BeanConfig {
 
 	@Bean
 	public NationalityService createNationalityService() {
 		return new NationalityService();
 	}
 	
-	// fix  valid characters are defined in RFC 7230 and RFC 3986 error
+	// fix valid characters are defined in RFC 7230 and RFC 3986 error
 	@Bean
 	public ConfigurableServletWebServerFactory webServerFactory() {
 	    TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();

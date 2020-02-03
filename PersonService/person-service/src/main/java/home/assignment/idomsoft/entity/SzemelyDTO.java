@@ -6,14 +6,9 @@
 package home.assignment.idomsoft.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import home.assignment.idomsoft.validation.BirthDate;
 import home.assignment.idomsoft.validation.Gender;
