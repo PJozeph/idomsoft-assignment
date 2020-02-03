@@ -21,7 +21,6 @@ import home.assignment.idomsoft.documentservice.entity.OkmanyDTO;
 import home.assignment.idomsoft.documentservice.entity.OkmanyDtoResponse;
 import home.assignment.idomsoft.documentservice.service.CardService;
 
-//crossorigin 
 @RestController
 public class DocumentApi {
 	final String uri = "http://localhost:8080/documentApi";
