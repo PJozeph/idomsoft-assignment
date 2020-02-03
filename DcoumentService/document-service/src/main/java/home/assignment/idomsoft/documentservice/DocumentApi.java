@@ -23,8 +23,7 @@ import home.assignment.idomsoft.documentservice.service.CardService;
 
 @RestController
 public class DocumentApi {
-	final String uri = "http://localhost:8080/documentApi";
-
+	
 	@Autowired
 	private CardService cardService;
 
